@@ -1,0 +1,27 @@
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# IDE
+.vscode/
+.idea/
+
+# Logs & data
+*.log
+*.csv
+*.xlsx
+logs/
+
+# Training outputs (keep results JSONs but ignore model weights)
+*.pt
+*.pth
+
+# Others
+.env
+.DS_Store

@@ -1,0 +1,91 @@
+# =============================================================================
+# PARETO MULTI-OBJECTIVE - NETWORK TOPOLOGY
+# =============================================================================
+# Backlog costs [5,5,3,3,2,2] - extended from thesis [5,3,2]
+
+env:
+  env_type: network
+  lead_time: 2
+  episode_len: 100
+  action_dim: 41
+  init_inventory: 20
+  init_outstanding: 10
+  holding_cost: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+  backlog_cost: [5.0, 5.0, 3.0, 3.0, 2.0, 2.0]  # Thesis setting extended
+  fixed_cost: 1.0
+  
+  # Reward params
+  service_bonus_scale: 10.0
+  
+  # Network topology: 2 parallel supply chains
+  # Agent 0,1: Retailers | Agent 2,3: Distributors | Agent 4,5: Factories
+  children:
+    0: []
+    1: []
+    2: [0]
+    3: [1]
+    4: [2]
+    5: [3]
+  parents:
+    0: 2
+    1: 3
+    2: 4
+    3: 5
+    4: null
+    5: null
+  
+  eval_data_dirs:
+    - "test_data/test_demand_merton"
+    - "test_data/test_demand_merton"
+
+agent:
+  hidden_dim: 128
+  critic_hidden_dim: 256
+  actor_lr: 0.0001
+  critic_lr: 0.0001
+  gamma: 0.99
+  gae_lambda: 0.95
+  eps_clip: 0.2
+  value_coef: 0.5
+  entropy_coef: 0.05
+
+training:
+  episodes: 8000
+  evaluate_every: 100
+  use_ga: true
+  ga_horizon: 5
+  n_rollout_threads: 8
+  early_stop: true
+  n_warmup_evaluations: 15
+  n_no_improvement_thres: 20
+  min_improvement_delta: 0.01
+  reduce_lr_on_plateau: true
+  lr_reduction_factor: 0.5
+  lr_reduction_patience: 5
+
+heuristic:
+  ga:
+    pop_size: 15
+    generations: 20
+    mutation_rate: 0.1
+
+pareto:
+  weight_configs:
+    - name: "cost_focused"
+      cost_weight: 1.0
+      service_weight: 0.0
+    - name: "cost_leaning"
+      cost_weight: 0.7
+      service_weight: 0.3
+    - name: "balanced"
+      cost_weight: 0.5
+      service_weight: 0.5
+    - name: "service_leaning"
+      cost_weight: 0.3
+      service_weight: 0.7
+    - name: "service_focused"
+      cost_weight: 0.0
+      service_weight: 1.0
+  
+  seeds: [1, 2, 3]
+  output_dir: "results/pareto_network"
