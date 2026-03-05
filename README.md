@@ -11,7 +11,8 @@ uses Pareto multi-objective optimization with five weight configurations
 are supported: a 3-echelon serial chain and a 6-agent network topology.
 
 **Acknowledgment**
-This work was conducted under the supervision of Associate Professor Dr. Nguyễn Văn Hợp (PGS.TS. Nguyễn Văn Hợp), International University – Vietnam National University Ho Chi Minh City (IU – VNU-HCM). His guidance and expertise in industrial engineering and supply chain management were invaluable throughout this research.
+This work was conducted under the supervision of **Associate Professor Dr. Nguyễn Văn Hợp**, International University – Vietnam National University Ho Chi Minh City (IU – VNU-HCM). His guidance and expertise in industrial engineering and supply chain management were invaluable throughout this research.
+
 ---
 
 ## Project Structure
